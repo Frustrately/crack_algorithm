@@ -1,11 +1,13 @@
 #pragma once
 #include <string>
+using namespace std;
+
 namespace crack_algorithm {
 
 	//×Ö·û´®
 	void replaceStr(char* str);
 	void replaceStrUnitTest();
 
-	char* compressStr(char* str);
+	string compressStr(string str);
 	void compressStrUnitTest();
 };

@@ -51,3 +51,6 @@
 *.opendb
 *.ipch
 *.ilk
+
+# Output
+crack/x64

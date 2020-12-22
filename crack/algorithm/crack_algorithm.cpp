@@ -90,18 +90,37 @@ namespace crack_algorithm {
 		replaceStr(str2);
 		cout << str << "\n" << str2 << endl;
 	}
-	
-	char* compressStr(char* str) {
-		if (nullptr == str) {
+
+	string compressStr(string str) {
+		if (str.empty()) {
 			return str;
 		}
 
-		return nullptr;
+		string ret;
+		int index = 0;
+		int length = str.length();
+		int current = 0;
+
+		while (index < length) {
+			current = index;
+			while (str[current] == str[index] && index < length) {
+				++index;
+			}
+
+			ret.append(1, str[current]).append(1, '0' + index - current);
+		}
+
+		if (ret.length() < length) {
+			return ret;
+		}
+
+		return str;
 	}
 
 	void compressStrUnitTest() {
+		string ret = compressStr("aaaaaaaa");
+		cout << "result:\n" << ret.c_str() << endl;
 	}
-
 }
 
 
