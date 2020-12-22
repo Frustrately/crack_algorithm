@@ -121,6 +121,61 @@ namespace crack_algorithm {
 		string ret = compressStr("aaaaaaaa");
 		cout << "result:\n" << ret.c_str() << endl;
 	}
+
+	void setMatrix(vector<vector<int>>& matrix) {
+		if (matrix.empty()) {
+			return;
+		}
+
+		vector<pair<int, int>> zeroCoordinate;
+		int rows = matrix.size();
+		int cols = matrix[0].size();
+		for (int row = 0; row < rows; ++row) {
+			for (int col = 0; col < cols; ++col) {
+				if (0 == matrix[row][col]) {
+					zeroCoordinate.push_back(pair<int,int>(row, col));
+				}
+			}
+		}
+
+		for (int index = 0; index < zeroCoordinate.size(); ++index) {
+			int rowIndex  = zeroCoordinate[index].first;
+			int colIndex = zeroCoordinate[index].second;
+			//row
+			for (int col = 0; col < matrix[rowIndex].size(); ++col) {
+				matrix[rowIndex][col] = 0;
+			}
+			//col
+			for (int row = 0; row < matrix.size(); ++row) {
+				matrix[row][colIndex] = 0;
+			}
+		}
+	}
+
+	ostream& operator<<(ostream& out, vector<vector<int>> vec) {
+		for (int row = 0; row < vec.size(); ++row) {
+			for (int col = 0; col < vec[row].size(); ++col) {
+				out << vec[row][col] << " ";
+			}
+
+			out << endl;
+		}
+
+		return out;
+	}
+
+	void setMatrixUnitTest() {
+		vector<vector<int>> matrix = {
+			{1, 2, 3, 4, 5, 6},
+			{2, 3, 0, 5, 6, 7},
+			{3, 5, 7, 8, 0, 1}
+		};
+
+		cout << "origin:\n" << matrix;
+		setMatrix(matrix);
+		cout << "result:\n" << matrix;
+	}
+
 }
 
 

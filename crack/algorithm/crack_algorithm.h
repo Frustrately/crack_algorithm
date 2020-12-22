@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 using namespace std;
 
 namespace crack_algorithm {
@@ -10,4 +11,7 @@ namespace crack_algorithm {
 
 	string compressStr(string str);
 	void compressStrUnitTest();
+
+	void setMatrix(vector<vector<int>>& matrix);
+	void setMatrixUnitTest();
 };
