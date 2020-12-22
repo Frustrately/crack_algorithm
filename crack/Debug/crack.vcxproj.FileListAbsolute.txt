@@ -1,0 +1,2 @@
+D:\code\github\crack_algorithm\crack\Debug\crack.exe
+D:\code\github\crack_algorithm\crack\Debug\crack.pdb
