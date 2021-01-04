@@ -1,6 +1,16 @@
 #include "crack_algorithm.h"
 #include <iostream>
+#include <stack>
+#include <map>
 using namespace std;
+
+namespace {
+	std::map<wchar_t, wchar_t> MapBracket = {
+		{L'(', L')'},
+		{L'[', L']'},
+		{L'{', L'}'}
+	};
+};
 
 namespace crack_algorithm {
 
@@ -174,6 +184,43 @@ namespace crack_algorithm {
 		cout << "origin:\n" << matrix;
 		setMatrix(matrix);
 		cout << "result:\n" << matrix;
+	}
+
+	
+
+	bool isPairBracket(wchar_t leftBracket, wchar_t rightBracket) {
+		auto itor = MapBracket.find(leftBracket);
+		if (itor == MapBracket.end()) {
+			return false;
+		}
+
+		return rightBracket == itor->second;
+	}
+
+	bool validBrackets(std::wstring strTest) {
+		std::stack<wchar_t> checkStack;
+		int length = strTest.length();
+		for (int index = 0; index < length; ++index) {
+			if (checkStack.empty()) {
+				checkStack.push(strTest[index]);
+				continue;
+			} 
+
+			wchar_t lastBracket = checkStack.top();
+			if (isPairBracket(lastBracket, strTest[index])) {
+				checkStack.pop();
+			} else {
+				checkStack.push(strTest[index]);
+			}
+		}
+
+		return checkStack.empty();
+	}
+
+	void validBracketTest() {
+		std::wstring strTest = L"{[()]}{}[]()((([()])))";
+		bool ret = validBrackets(strTest);
+		wcout << strTest.c_str() << ", result : " << ret << endl;
 	}
 
 }

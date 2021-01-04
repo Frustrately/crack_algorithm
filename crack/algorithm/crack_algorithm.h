@@ -14,4 +14,7 @@ namespace crack_algorithm {
 
 	void setMatrix(vector<vector<int>>& matrix);
 	void setMatrixUnitTest();
+
+	//¿®∫≈∆•≈‰
+	void validBracketTest();
 };
