@@ -271,7 +271,7 @@ namespace crack_algorithm {
 
 		ListNode<T>* pNode = pHead;
 		while (nullptr != pNode) {
-			out << "node:" <<pNode->val << endl;
+			out << " " <<pNode->val;
 			pNode = pNode->pNext;
 		}
 
@@ -453,10 +453,12 @@ namespace crack_algorithm {
 			return number1;
 		}
 
-		int carryNumber = 0, remainderNumber = 0, addResultNumber;
-		ListNode<int>* pPreCursor1 = number1;
+		int carryNumber = 0, remainderNumber = 0, addResultNumber = 0;
 		ListNode<int>* pCursor1 = number1;
 		ListNode<int>* pCursor2 = number2;
+		ListNode<int>* pRet = nullptr;
+		ListNode<int>* pInsert = nullptr;
+
 		while (nullptr != pCursor1) {
 			addResultNumber = carryNumber + pCursor1->val;
 			if (nullptr != pCursor2) {
@@ -466,18 +468,42 @@ namespace crack_algorithm {
 
 			carryNumber = addResultNumber / 10;
 			remainderNumber = addResultNumber % 10;
-			pCursor1->val = remainderNumber;
-			pPreCursor1 = pCursor1;
-			pCursor1 = pCursor1->pNext;
+			ListNode<int>* pNode = new ListNode<int>(remainderNumber, nullptr);
+			if (nullptr == pRet) {
+				pRet = pNode;
+				pInsert = pNode;
+			}
+			else {
+				pInsert->pNext = pNode;
+				pInsert = pNode;
+			}
+
+			if (nullptr == pCursor1->pNext && nullptr != pCursor2) {
+				pCursor1 = pCursor2;
+				pCursor2 = nullptr;
+			}
+			else {
+				pCursor1 = pCursor1->pNext;
+			}
 		}
 
-		//todo
+		if (nullptr != pRet && nullptr != pInsert && 0 != carryNumber) {
+			pInsert->pNext = new ListNode<int>(carryNumber, nullptr);
+		}
 
-	
+		return pRet;
 	}
 
 	void addListNumberUnitTest() {
+		ListNode<int>* pNode1 = new ListNode<int>(9, nullptr);
+		ListNode<int>* pNodeHead = new ListNode<int>(9, pNode1);
 
+		ListNode<int>* pNode21 = new ListNode<int>(7, nullptr);
+		ListNode<int>* pNode11 = new ListNode<int>(5, pNode21);
+		ListNode<int>* pNodeHead1 = new ListNode<int>(1, pNode11);
+
+		ListNode<int>* pSum = addListNumber(pNodeHead, pNodeHead1);
+		cout << pNodeHead << " +" << pNodeHead1 << " =" << pSum;
 	}
 
 }
