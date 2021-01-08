@@ -6,7 +6,7 @@
 
 int main()
 {
-    crack_algorithm::findListCircleEntranceUnitTest();
+    crack_algorithm::isSymmetryListUnitTest();
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

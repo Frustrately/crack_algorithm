@@ -69,4 +69,24 @@ namespace crack_algorithm {
 	ListNode<int>* findListCircleEntrance(ListNode<int>* number1);
 	ListNode<int>* findListCircleEntrance2(ListNode<int>* pList);
 	void findListCircleEntranceUnitTest();
+
+	/*
+	* 确认是否为中心对称链表（回文链表）
+	* 核心思路从中心出发对称遍历比较值是否相同
+	* 1.直接生成新的翻转链表，与原内容进行比较即可得到结果，比较暴力
+	* 2.找到中心点，同时使用中心的左侧的数据与右侧的数据进行对称比较。
+	*   2.1 可以使用快慢指针找到中心的位置，注意奇偶的判断。
+	*   2.2 内容的比较可以借助栈结构来完成（递归or循环）
+	* 3.以上方法的时间和空间复杂度都为O(n),其实可以借助原有的链表内容进行处理，优化效率
+	*/
+
+	template<typename T>
+	ListNode<T>* reverseList(ListNode<T>* pHead);
+
+	//后序遍历
+	template<typename T>
+	void traverseList(ListNode<T>* pHead);
+
+	bool isSymmetryListVer1(ListNode<int>* pHead);
+	void isSymmetryListUnitTest();
 };

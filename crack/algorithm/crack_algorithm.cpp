@@ -564,6 +564,83 @@ namespace crack_algorithm {
 		cout << "solution2: " << pRet2->val << endl;
 	}
 
+
+	template<typename T>
+	ListNode<T>* reverseList(ListNode<T>* pHead) {
+		ListNode<T>* pCursor = pHead;
+		ListNode<T>* pRetHead =nullptr;
+		ListNode<T>* pTemp = nullptr;
+		while (nullptr != pCursor) {
+			pTemp = pCursor->pNext;
+			pCursor->pNext = pRetHead;
+			pRetHead = pCursor;
+			pCursor = pTemp;
+		}
+
+		return pRetHead;
+	}
+
+	template<typename T>
+	void traverseList(ListNode<T>* pHead) {
+		if (nullptr == pHead)
+			return;
+
+		traverseList(pHead->pNext);
+		cout << " " << pHead->val;
+	}
+
+	//此版本没有消耗额外的空间
+	bool isSymmetryListVer1(ListNode<int>* pHead) {
+		//通过快慢指针找到需要比较的位置
+		if (nullptr == pHead) {
+			return false;
+		}
+
+		ListNode<int>* pFast = pHead;
+		ListNode<int>* pSlow = pHead;
+		while (nullptr != pFast && nullptr != pFast->pNext) {
+			pSlow = pSlow->pNext;
+			pFast = pFast->pNext->pNext;
+		}
+
+		if (nullptr != pFast) {
+			pSlow = pSlow->pNext;
+		}
+
+		//将找到位置进行反转 然后逐一比较
+		ListNode<int>* pReverseNode = reverseList(pSlow);
+		ListNode<int>* pRight = pReverseNode;
+		ListNode<int>* pLeft = pHead;
+		bool ret = true;
+		while (nullptr != pRight && nullptr != pLeft) {
+			if (pLeft->val != pRight->val) {
+				ret = false;
+				break;
+			}
+			pRight = pRight->pNext;
+			pLeft = pLeft->pNext;
+		}
+
+		//回复反转的内容
+		reverseList(pReverseNode);
+		return ret;
+	}
+
+	void isSymmetryListUnitTest() {
+		ListNode<int>* pNode6 = new ListNode<int>(10, nullptr);
+		ListNode<int>* pNode5 = new ListNode<int>(1, pNode6);
+		ListNode<int>* pNode4 = new ListNode<int>(8, pNode5);
+		ListNode<int>* pNode3 = new ListNode<int>(9, pNode4);
+		ListNode<int>* pNode2 = new ListNode<int>(15, pNode3);
+		ListNode<int>* pNode1 = new ListNode<int>(1, pNode2);
+		ListNode<int>* pNodeHead = new ListNode<int>(10, pNode1);
+
+		cout << pNodeHead << endl;
+		cout << "-------------------------------" << endl;
+		cout << "isSymmetryListVer1:" << isSymmetryListVer1(pNodeHead) << endl;
+		cout << pNodeHead << endl;
+	}
+
 }
 
 
