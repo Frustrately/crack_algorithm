@@ -65,4 +65,8 @@ namespace crack_algorithm {
 
 	ListNode<int>* addListNumber(ListNode<int>* number1, ListNode<int>* number2);
 	void addListNumberUnitTest();
+
+	ListNode<int>* findListCircleEntrance(ListNode<int>* number1);
+	ListNode<int>* findListCircleEntrance2(ListNode<int>* pList);
+	void findListCircleEntranceUnitTest();
 };

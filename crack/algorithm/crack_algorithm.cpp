@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stack>
 #include <map>
+#include <set>
 using namespace std;
 
 namespace {
@@ -504,6 +505,63 @@ namespace crack_algorithm {
 
 		ListNode<int>* pSum = addListNumber(pNodeHead, pNodeHead1);
 		cout << pNodeHead << " +" << pNodeHead1 << " =" << pSum;
+	}
+
+	crack_algorithm::ListNode<int>* findListCircleEntrance(ListNode<int>* number1) {
+		std::set<ListNode<int>*> setNodes;
+		ListNode<int>* pCursor = number1;
+		while (nullptr != pCursor) {
+			if (setNodes.end() != setNodes.find(pCursor)) {
+				return pCursor;
+			}
+
+			setNodes.insert(pCursor);
+			pCursor = pCursor->pNext;
+		}
+		
+		return nullptr;
+	}
+
+	crack_algorithm::ListNode<int>* findListCircleEntrance2(ListNode<int>* pList) {
+		ListNode<int>* pCursor1 = pList;
+		ListNode<int>* pCursor2 = nullptr;
+
+		//查找pCursor1为最后一个结点的情况，最后一个结点满足一个比较特殊的条件，那就是此结点出现前，它的next结点先出现.
+		while (nullptr != pCursor1) {
+			pCursor2 = pList;
+			while (nullptr != pCursor2 && pCursor2 != pCursor1->pNext) {
+				if (pCursor1 == pCursor2) {
+					break;
+				}
+
+				pCursor2 = pCursor2->pNext;
+			}
+
+			if (pCursor2 == pCursor1->pNext) {
+				return pCursor2;
+			}
+			else {
+				pCursor1 = pCursor1->pNext;
+			}
+		}
+
+		return nullptr;
+	}
+
+	void findListCircleEntranceUnitTest() {
+		ListNode<int>* pNode5 = new ListNode<int>(4, nullptr);
+		ListNode<int>* pNode4 = new ListNode<int>(12, pNode5);
+		ListNode<int>* pNode3 = new ListNode<int>(7, pNode4);
+		ListNode<int>* pNode2 = new ListNode<int>(15, pNode3);
+		ListNode<int>* pNode1 = new ListNode<int>(1, pNode2);
+		ListNode<int>* pNodeHead = new ListNode<int>(10, pNode1);
+		pNode5->pNext = pNodeHead;
+
+		ListNode<int>* pRet = findListCircleEntrance(pNodeHead);
+		cout << pRet->val << endl;
+
+		ListNode<int>* pRet2 = findListCircleEntrance(pNodeHead);
+		cout << "solution2: " << pRet2->val << endl;
 	}
 
 }
