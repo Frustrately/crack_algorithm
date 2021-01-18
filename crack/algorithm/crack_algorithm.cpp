@@ -641,6 +641,63 @@ namespace crack_algorithm {
 		cout << pNodeHead << endl;
 	}
 
+	void LruCacheUnitTest() {
+		using namespace std;
+		LruCache lruCache(3);
+
+		lruCache.put(1, 10);
+		lruCache.put(2, 11);
+		lruCache.put(2, 15);
+		cout << lruCache.get(1) << endl;
+		lruCache.put(3, 12);
+		lruCache.put(4, 13);
+		cout << lruCache.get(1) << endl;
+		cout << lruCache.get(2) << endl;
+		lruCache.put(5, 16);
+		cout << lruCache.get(3) << endl;
+	}
+
+	LruCache::LruCache(int capacity)
+		: m_capacity(capacity) {
+
+	}
+
+	void LruCache::put(int key, int value) {
+		auto itor = m_mapList.find(key);
+		if (itor == m_mapList.end()) {
+			if (m_listLru.size() >= m_capacity) {
+				int delKey = m_listLru.back().first;
+				m_mapList.erase(delKey);
+				m_listLru.pop_back();
+			}
+
+			m_listLru.push_front(std::make_pair(key, value));
+			m_mapList[key] = m_listLru.begin();
+		} else {
+			auto moveItem = itor->second;
+			auto content = *moveItem;
+			content.second = value;
+
+			m_listLru.erase(moveItem);
+			m_listLru.push_front(content);
+			m_mapList[key] = m_listLru.begin();
+		}
+
+	}
+
+	int LruCache::get(int key) {
+		auto itor = m_mapList.find(key);
+		if (itor == m_mapList.end()) {
+			return -1;
+		}
+
+		auto listItem = itor->second;
+		auto itemContent = *listItem;
+		m_listLru.erase(listItem);
+		m_listLru.push_front(itemContent);
+		m_mapList[key] = m_listLru.begin();
+		return itemContent.second;
+	}
 }
 
 

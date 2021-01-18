@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <unordered_map>
 using namespace std;
 
 namespace crack_algorithm {
@@ -89,4 +90,21 @@ namespace crack_algorithm {
 
 	bool isSymmetryListVer1(ListNode<int>* pHead);
 	void isSymmetryListUnitTest();
+
+	class LruCache {
+	public:
+		LruCache(int capacity);
+		void put(int key, int value);
+		int get(int key);
+
+	private:
+		typedef std::list <std::pair<int, int>> LruList;
+		typedef LruList::iterator LruItemPointer;
+		std::unordered_map<int, LruItemPointer>  m_mapList;
+		LruList m_listLru;
+		int m_capacity;
+	};
+
+
+	void LruCacheUnitTest();
 };
